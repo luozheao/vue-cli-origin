@@ -29,7 +29,10 @@
   "bin": {
     "vue": "bin/vue",
     "vue-init": "bin/vue-init",
-    "vue-list": "bin/vue-list"
+    "vue-list": "bin/vue-list",
+    "ox": "bin/vue",
+    "ox-init": "bin/vue-init",
+    "ox-list": "bin/vue-list"
   },
   "bugs": {
     "url": "https://github.com/vuejs/vue-cli/issues"
@@ -87,5 +90,5 @@
     "lint": "eslint test/e2e/test*.js lib bin/* --env mocha",
     "test": "npm run lint && npm run e2e"
   },
-  "version": "1.0.0"
+  "version": "1.0.2"
 }
