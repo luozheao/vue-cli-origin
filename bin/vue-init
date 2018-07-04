@@ -16,6 +16,8 @@ const checkVersion = require('../lib/check-version')
 const warnings = require('../lib/warnings')
 const localPath = require('../lib/local-path')
 
+const git = require('simple-git/promise')
+
 const isLocalPath = localPath.isLocalPath
 const getTemplatePath = localPath.getTemplatePath
 
@@ -66,6 +68,9 @@ const to = path.resolve(rawName || '.')
 const clone = program.clone || false
 
 const tmp = path.join(home, '.vue-templates', template.replace(/[\/:]/g, '-'))
+
+console.log(tmp, '1111111111111111', home);
+
 if (program.offline) {
     console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`)
     template = tmp
@@ -119,7 +124,7 @@ function run() {
                 // const officialTemplate = 'vuejs-templates/' + template //下载地址改造
                 //下载地址改造 git@git.tools.pjbest.com:oxui/ox-webpack.git
                 //https://gitlab:git.tools.pjbest.com:oxui/download-git-repo-fixture#my-branch
-                const officialTemplate = 'https://gitlab:git.tools.pjbest.com:oxui/' + template
+                const officialTemplate = 'http://git.tools.pjbest.com/oxui/' + template + '.git'
                 if (template.indexOf('#') !== -1) {
                     downloadAndGenerate(officialTemplate)
                 } else {
@@ -148,13 +153,24 @@ function downloadAndGenerate(template) {
     spinner.start()
         // Remove if local template exists
     if (exists(tmp)) rm(tmp)
-    download(template, tmp, { clone }, err => {
-        spinner.stop()
-        if (err) logger.fatal('Failed to download repo ' + template + ': ' + err.message.trim())
-        generate(name, tmp, to, err => {
-            if (err) logger.fatal(err)
-            console.log()
-            logger.success('Generated "%s".', name)
-        })
-    })
+        // download(template, tmp, { clone }, err => {
+        //     spinner.stop()
+        //     if (err) logger.fatal('Failed to download repo ' + template + ': ' + err.message.trim())
+        //     generate(name, tmp, to, err => {
+        //         if (err) logger.fatal(err)
+        //         console.log()
+        //         logger.success('Generated "%s".', name)
+        //     })
+        // })
+
+    git().silent(true).clone(template, tmp) //template为git地址,tmp为本地存储模板地址
+        .then(() => {
+            spinner.stop()
+            generate(name, tmp, to, err => {
+                    if (err) logger.fatal(err)
+                    logger.success('Generated "%s".', name)
+                })
+                // process.exit(0); //一定要注释掉这一句
+        }).catch((err) => console.log('failed:', err));
+
 }

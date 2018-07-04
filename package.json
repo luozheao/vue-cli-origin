@@ -54,6 +54,7 @@
         "request": "^2.67.0",
         "rimraf": "^2.5.0",
         "semver": "^5.1.0",
+        "simple-git": "^1.96.0",
         "tildify": "^1.2.0",
         "uid": "0.0.2",
         "user-home": "^2.0.0",
@@ -91,5 +92,5 @@
         "lint": "eslint test/e2e/test*.js lib bin/* --env mocha",
         "test": "npm run lint && npm run e2e"
     },
-    "version": "1.0.5"
+    "version": "1.0.24"
 }
