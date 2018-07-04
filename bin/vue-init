@@ -24,32 +24,32 @@ const getTemplatePath = localPath.getTemplatePath
  */
 
 program
-  .usage('<template-name> [project-name]')
-  .option('-c, --clone', 'use git clone')
-  .option('--offline', 'use cached template')
+    .usage('<template-name> [project-name]')
+    .option('-c, --clone', 'use git clone')
+    .option('--offline', 'use cached template')
 
 /**
  * Help.
  */
 
 program.on('--help', () => {
-  console.log('  Examples:')
-  console.log()
-  console.log(chalk.gray('    # create a new project with an official template'))
-  console.log('    $ vue init webpack my-project')
-  console.log()
-  console.log(chalk.gray('    # create a new project straight from a github template'))
-  console.log('    $ vue init username/repo my-project')
-  console.log()
+    console.log('  Examples:')
+    console.log()
+    console.log(chalk.gray('    # create a new project with an official template'))
+    console.log('    $ vue init webpack my-project')
+    console.log()
+    console.log(chalk.gray('    # create a new project straight from a github template'))
+    console.log('    $ vue init username/repo my-project')
+    console.log()
 })
 
 /**
  * Help.
  */
 
-function help () {
-  program.parse(process.argv)
-  if (program.args.length < 1) return program.help()
+function help() {
+    program.parse(process.argv)
+    if (program.args.length < 1) return program.help()
 }
 help()
 
@@ -57,7 +57,7 @@ help()
  * Settings.
  */
 
-let template = program.args[0]
+let template = program.args[0] //拿到第一个参数,即模板名字
 const hasSlash = template.indexOf('/') > -1
 const rawName = program.args[1]
 const inPlace = !rawName || rawName === '.'
@@ -67,8 +67,8 @@ const clone = program.clone || false
 
 const tmp = path.join(home, '.vue-templates', template.replace(/[\/:]/g, '-'))
 if (program.offline) {
-  console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`)
-  template = tmp
+    console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`)
+    template = tmp
 }
 
 /**
@@ -77,63 +77,63 @@ if (program.offline) {
 
 console.log()
 process.on('exit', () => {
-  console.log()
+    console.log()
 })
 
 if (inPlace || exists(to)) {
-  inquirer.prompt([{
-    type: 'confirm',
-    message: inPlace
-      ? 'Generate project in current directory?'
-      : 'Target directory exists. Continue?',
-    name: 'ok'
-  }]).then(answers => {
-    if (answers.ok) {
-      run()
-    }
-  }).catch(logger.fatal)
+    inquirer.prompt([{
+        type: 'confirm',
+        message: inPlace ?
+            'Generate project in current directory?' : 'Target directory exists. Continue?',
+        name: 'ok'
+    }]).then(answers => {
+        if (answers.ok) {
+            run()
+        }
+    }).catch(logger.fatal)
 } else {
-  run()
+    run()
 }
 
 /**
  * Check, download and generate the project.
  */
 
-function run () {
-  // check if template is local
-  if (isLocalPath(template)) {
-    const templatePath = getTemplatePath(template)
-    if (exists(templatePath)) {
-      generate(name, templatePath, to, err => {
-        if (err) logger.fatal(err)
-        console.log()
-        logger.success('Generated "%s".', name)
-      })
-    } else {
-      logger.fatal('Local template "%s" not found.', template)
-    }
-  } else {
-    checkVersion(() => {
-      if (!hasSlash) {
-        // use official templates
-        const officialTemplate = 'vuejs-templates/' + template //下载地址改造
-        if (template.indexOf('#') !== -1) {
-          downloadAndGenerate(officialTemplate)
+function run() {
+    // check if template is local
+    if (isLocalPath(template)) {
+        const templatePath = getTemplatePath(template)
+        if (exists(templatePath)) {
+            generate(name, templatePath, to, err => {
+                if (err) logger.fatal(err)
+                console.log()
+                logger.success('Generated "%s".', name)
+            })
         } else {
-          if (template.indexOf('-2.0') !== -1) {
-            warnings.v2SuffixTemplatesDeprecated(template, inPlace ? '' : name)
-            return
-          }
-
-          // warnings.v2BranchIsNowDefault(template, inPlace ? '' : name)
-          downloadAndGenerate(officialTemplate)
+            logger.fatal('Local template "%s" not found.', template)
         }
-      } else {
-        downloadAndGenerate(template)
-      }
-    })
-  }
+    } else {
+        checkVersion(() => {
+            if (!hasSlash) {
+                // use official templates  gitlab:mygitlab.com:flipxfx/download-git-repo-fixture#my-branch
+                // const officialTemplate = 'vuejs-templates/' + template //下载地址改造
+                //下载地址改造 git@git.tools.pjbest.com:oxui/ox-webpack.git
+                const officialTemplate = 'gitlab:git.tools.pjbest.com:oxui/' + template
+                if (template.indexOf('#') !== -1) {
+                    downloadAndGenerate(officialTemplate)
+                } else {
+                    if (template.indexOf('-2.0') !== -1) {
+                        warnings.v2SuffixTemplatesDeprecated(template, inPlace ? '' : name)
+                        return
+                    }
+                    // warnings.v2BranchIsNowDefault(template, inPlace ? '' : name)
+                    downloadAndGenerate(officialTemplate)
+                }
+            } else {
+                downloadAndGenerate(template)
+            }
+        })
+    }
 }
 
 /**
@@ -142,18 +142,18 @@ function run () {
  * @param {String} template
  */
 
-function downloadAndGenerate (template) {
-  const spinner = ora('downloading template')
-  spinner.start()
-  // Remove if local template exists
-  if (exists(tmp)) rm(tmp)
-  download(template, tmp, { clone }, err => {
-    spinner.stop()
-    if (err) logger.fatal('Failed to download repo ' + template + ': ' + err.message.trim())
-    generate(name, tmp, to, err => {
-      if (err) logger.fatal(err)
-      console.log()
-      logger.success('Generated "%s".', name)
+function downloadAndGenerate(template) {
+    const spinner = ora('downloading template')
+    spinner.start()
+        // Remove if local template exists
+    if (exists(tmp)) rm(tmp)
+    download(template, tmp, { clone }, err => {
+        spinner.stop()
+        if (err) logger.fatal('Failed to download repo ' + template + ': ' + err.message.trim())
+        generate(name, tmp, to, err => {
+            if (err) logger.fatal(err)
+            console.log()
+            logger.success('Generated "%s".', name)
+        })
     })
-  })
 }

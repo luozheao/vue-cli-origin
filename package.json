@@ -75,12 +75,12 @@
     },
     "homepage": "https://github.com/vuejs/vue-cli#readme",
     "keywords": [
-        "vue",
+        "ox",
         "cli",
         "spa"
     ],
     "license": "MIT",
-    "name": "vue-cli-luozheao",
+    "name": "ox-cli",
     "preferGlobal": true,
     "repository": {
         "type": "git",
@@ -91,5 +91,5 @@
         "lint": "eslint test/e2e/test*.js lib bin/* --env mocha",
         "test": "npm run lint && npm run e2e"
     },
-    "version": "1.0.0"
+    "version": "1.0.1"
 }
