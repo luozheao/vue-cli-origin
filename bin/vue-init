@@ -118,7 +118,8 @@ function run() {
                 // use official templates  gitlab:mygitlab.com:flipxfx/download-git-repo-fixture#my-branch
                 // const officialTemplate = 'vuejs-templates/' + template //下载地址改造
                 //下载地址改造 git@git.tools.pjbest.com:oxui/ox-webpack.git
-                const officialTemplate = 'gitlab:git.tools.pjbest.com:oxui/' + template
+                //https://gitlab:git.tools.pjbest.com:oxui/download-git-repo-fixture#my-branch
+                const officialTemplate = 'https://gitlab:git.tools.pjbest.com:oxui/' + template
                 if (template.indexOf('#') !== -1) {
                     downloadAndGenerate(officialTemplate)
                 } else {

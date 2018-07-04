@@ -47,9 +47,9 @@ console.log(' 可以用的模板:')
 console.log(
     '  ' + chalk.yellow('★') +
     '  ' + chalk.blue('ox-webpack') +
-    ' ------------ ' + '基于webpack的模板')
+    ' ------------ ' + '基于webpack的模板,2')
 
 console.log(
     '  ' + chalk.yellow('★') +
     '  ' + chalk.blue('ox-simple-webpack') +
-    ' ------------ ' + '简化了的基于webpack的模板,未实现')
+    ' ------------ ' + '简化了的基于webpack的模板,未实现,2')
