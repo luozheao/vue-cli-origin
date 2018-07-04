@@ -40,7 +40,6 @@
   "bundleDependencies": false,
   "dependencies": {
     "async": "^2.4.0",
-    "chalk": "^2.1.0",
     "coffee-script": "1.12.7",
     "commander": "^2.9.0",
     "consolidate": "^0.14.0",
@@ -64,9 +63,11 @@
   "description": "A simple CLI for scaffolding Vue.js projects.",
   "devDependencies": {
     "chai": "^4.1.2",
+    "chalk": "^2.4.1",
     "eslint": "^3.19.0",
     "eslint-plugin-vue-libs": "^1.2.1",
     "execa": "^0.8.0",
+    "gulp-sass": "^4.0.1",
     "mocha": "^3.5.3"
   },
   "engines": {
@@ -90,5 +91,5 @@
     "lint": "eslint test/e2e/test*.js lib bin/* --env mocha",
     "test": "npm run lint && npm run e2e"
   },
-  "version": "1.0.2"
+  "version": "1.0.4"
 }

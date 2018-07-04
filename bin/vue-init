@@ -117,7 +117,7 @@ function run () {
     checkVersion(() => {
       if (!hasSlash) {
         // use official templates
-        const officialTemplate = 'vuejs-templates/' + template  //下载地址改写
+        const officialTemplate = 'vuejs-templates/' + template //下载地址改造
         if (template.indexOf('#') !== -1) {
           downloadAndGenerate(officialTemplate)
         } else {

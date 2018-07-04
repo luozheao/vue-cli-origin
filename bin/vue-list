@@ -34,6 +34,10 @@ request({
         '  ' + chalk.blue(repo.name) +
         ' ------------ ' + repo.description)
     })
+    console.log(
+      '  ' + chalk.yellow('★') +
+      '  ' + chalk.blue('luozheao/webpack#develop') +
+      ' ------------ ' + '我github上的webpack模板,添加了是否安装vuex的询问')
   } else {
     console.error(requestBody.message)
   }
