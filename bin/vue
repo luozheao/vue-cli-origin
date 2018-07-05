@@ -8,7 +8,7 @@ program
     .command('init', 'generate a new project from a template')
     .command('list', 'list available official templates ')
     // .command('build', 'prototype a new project')
-    // .command('create', '(for v3 warning only)')
+    .command('create', '创建一个业务模块实例')
     // .command('haha','my name is luozheao')
 
 program.parse(process.argv)

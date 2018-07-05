@@ -1,16 +1,15 @@
 #!/usr/bin/env node
 
-const chalk = require('chalk')
+const program = require('commander');
 
-console.log()
-console.log(
-  `  ` +
-  chalk.yellow(`vue create`) +
-  ' is a Vue CLI 3 only command and you are using Vue CLI ' +
-  require('../package.json').version + '.'
-)
-console.log(`  You may want to run the following to upgrade to Vue CLI 3:`)
-console.log()
-console.log(chalk.cyan(`  npm uninstall -g vue-cli`))
-console.log(chalk.cyan(`  npm install -g @vue/cli`))
-console.log()
+program
+    .option('-v,--vue', 'generate a signal .vue file in a folder for component/router')
+    .option('-l,--less', 'generate a .vue file , a .js file and a .less file in a folder for component/router')
+    .option('-c,--css', 'generate a .vue file , a .js file and a .css file in a folder for component/router')
+    .option('-s,--sass', 'generate a .vue file , a .js file and a .sass file in a folder for component/router')
+    .parse(process.argv)
+
+    //从program拿到输入参数 ,process.cwd()运行当前脚本的工作目录的路径
+require('../lib/generate2').generate(program, {
+    cwd: process.cwd(),
+});

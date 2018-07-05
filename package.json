@@ -30,9 +30,10 @@
         "vue": "bin/vue",
         "vue-init": "bin/vue-init",
         "vue-list": "bin/vue-list",
+        "vue-create": "bin/vue-create",
         "ox": "bin/vue",
         "ox-init": "bin/vue-init",
-        "ox-list": "bin/vue-list"
+        "ox-create": "bin/vue-create"
     },
     "bugs": {
         "url": "https://github.com/vuejs/vue-cli/issues"
@@ -92,5 +93,5 @@
         "lint": "eslint test/e2e/test*.js lib bin/* --env mocha",
         "test": "npm run lint && npm run e2e"
     },
-    "version": "1.0.24"
+    "version": "1.0.25"
 }

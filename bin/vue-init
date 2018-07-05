@@ -69,7 +69,7 @@ const clone = program.clone || false
 
 const tmp = path.join(home, '.vue-templates', template.replace(/[\/:]/g, '-'))
 
-console.log(tmp, '1111111111111111', home);
+
 
 if (program.offline) {
     console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`)
@@ -169,8 +169,7 @@ function downloadAndGenerate(template) {
             generate(name, tmp, to, err => {
                     if (err) logger.fatal(err)
                     logger.success('Generated "%s".', name)
-                })
-                // process.exit(0); //一定要注释掉这一句
+                }) 
         }).catch((err) => console.log('failed:', err));
 
 }
