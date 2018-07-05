@@ -3,13 +3,14 @@
 const program = require('commander');
 
 program
-    .option('-v,--vue', 'generate a signal .vue file in a folder for component/router')
-    .option('-l,--less', 'generate a .vue file , a .js file and a .less file in a folder for component/router')
-    .option('-c,--css', 'generate a .vue file , a .js file and a .css file in a folder for component/router')
-    .option('-s,--sass', 'generate a .vue file , a .js file and a .sass file in a folder for component/router')
-    .parse(process.argv)
+    .usage('<template-name>')
+    .description('可用业务模板:order')
+    .option('-u, --username [username]', '用户名', 'username')
+    .option('-t, --tel [tel]', '电话', '123456')
+    .option('-c, --configName <configName>', '配置文件');
+program.parse(process.argv)
 
-    //从program拿到输入参数 ,process.cwd()运行当前脚本的工作目录的路径
+//从program拿到输入参数 ,process.cwd()运行当前脚本的工作目录的路径
 require('../lib/generate2').generate(program, {
     cwd: process.cwd(),
 });
