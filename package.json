@@ -91,7 +91,8 @@
     "scripts": {
         "e2e": "rimraf test/e2e/mock-template-build && mocha test/e2e/test.js --slow 1000",
         "lint": "eslint test/e2e/test*.js lib bin/* --env mocha",
-        "test": "npm run lint && npm run e2e"
+        "test": "npm run lint && npm run e2e",
+        "pb": "npm version patch && npm publish"
     },
     "version": "1.0.31"
 }
