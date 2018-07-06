@@ -61,8 +61,8 @@ $ ox create order --username  '用户名' --tel 123456
 例子2:
 
 ``` bash
-$ ox create order --configName myConfig
+$ ox create order --configName myConfig.js
 ```
 
-上述命令,`myconfig`为配置文件,内容为一个JSON格式的对象,存放在my-project/config_tem.即根据配置文件的内容,用脚手架内置的order模板,在my-project项目的src/assets路径下,创建一个vue文件.
+上述命令,`myconfig.js`为配置文件,内容为一个JSON格式的对象,存放在my-project/config_tem.即根据配置文件的内容,用脚手架内置的order模板,在my-project项目的src/assets路径下,创建一个vue文件.
   
