@@ -10,7 +10,7 @@
 $ npm install -g ox-cli
 ```
 
-### 用法
+### 用法一 : 
 
 ``` bash
 $ ox init <template-name> <project-name>
@@ -23,3 +23,34 @@ $ ox init ox-webpack my-project
 ```
 
 上面的命令,将从 [http://git.tools.pjbest.com/oxui/ox-webpack.git](http://git.tools.pjbest.com/oxui/ox-webpack)拿到基于webpack的模板,通过命令交互输入配置信息, 然后创建一个叫my-project的项目.
+
+### 用法二 : 
+
+``` bash
+$ ox list
+```
+
+该命令将例举出有哪些可用的模板
+
+### 用法三 : 
+
+``` bash
+$ ox create <module-name> [option]
+```
+
+例子1:
+
+``` bash
+$ ox create order --username  '用户名' --tel 123456
+```
+
+上述命令,将录入输入的参数,用脚手架内置的一个名叫order的业务模板,在my-project项目的src/assets路径下,创建一个vue文件
+
+例子2:
+
+``` bash
+$ ox create order --configName myConfig
+```
+
+上述命令,`myconfig`为配置文件,内容为一个JSON格式的对象,存放在my-project/config_tem.即根据配置文件的内容,用脚手架内置的order模板,在my-project项目的src/assets路径下,创建一个vue文件.
+  
