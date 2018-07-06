@@ -2,6 +2,7 @@
 
 [一个用于vue项目的脚手架](http://git.tools.pjbest.com/oxui/ox-cli)
 
+
 ### 安装
 
 要求: [Node.js](https://nodejs.org/en/) (>=6.x, 8.x preferred), npm version 3+ and [Git](https://git-scm.com/).
@@ -9,8 +10,19 @@
 ``` bash
 $ npm install -g ox-cli
 ```
+### 完整用法 :
 
-### 用法一 : 
+``` 
+$ npm install -g ox-cli
+$ ox init ox-webpack my-project
+$ cd my-project
+$ ox create order -u 'username' -t 123456
+$ npm install
+$ npm run dev
+```
+
+
+### 用法介绍一 : 
 
 ``` bash
 $ ox init <template-name> <project-name>
@@ -24,7 +36,7 @@ $ ox init ox-webpack my-project
 
 上面的命令,将从 [http://git.tools.pjbest.com/oxui/ox-webpack.git](http://git.tools.pjbest.com/oxui/ox-webpack)拿到基于webpack的模板,通过命令交互输入配置信息, 然后创建一个叫my-project的项目.
 
-### 用法二 : 
+### 用法介绍二 : 
 
 ``` bash
 $ ox list
@@ -32,7 +44,7 @@ $ ox list
 
 该命令将例举出有哪些可用的模板
 
-### 用法三 : 
+### 用法介绍三 : 
 
 ``` bash
 $ ox create <module-name> [option]
