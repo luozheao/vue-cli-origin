@@ -7,7 +7,7 @@ program
     .description('可用业务模板:order')
     .option('-u, --username [username]', '用户名', 'username')
     .option('-t, --tel [tel]', '电话', '123456')
-    .option('-c, --configName <configName>', '配置文件');
+    .option('-c, --configName <configName>', 'config_tem文件夹中的配置文件名');
 program.parse(process.argv)
 
 //从program拿到输入参数 ,process.cwd()运行当前脚本的工作目录的路径

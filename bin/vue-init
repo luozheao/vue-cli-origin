@@ -27,22 +27,22 @@ const getTemplatePath = localPath.getTemplatePath
 
 program
     .usage('<template-name> [project-name]')
-    .option('-c, --clone', 'use git clone')
-    .option('--offline', 'use cached template')
+    // .option('-c, --clone', 'use git clone')
+    .option('--offline', '使用已缓存到本地的模板,第一次创建不能用此命令')
 
 /**
  * Help.
  */
 
 program.on('--help', () => {
-    console.log('  Examples:')
+    console.log('  例子:')
     console.log()
-    console.log(chalk.gray('    # create a new project with an official template'))
-    console.log('    $ vue init webpack my-project')
-    console.log()
-    console.log(chalk.gray('    # create a new project straight from a github template'))
-    console.log('    $ vue init username/repo my-project')
-    console.log()
+    console.log(chalk.gray('    # 用内网的框架模板ox-webpack,创建一个项目'))
+    console.log('    $ ox init ox-webpack my-project')
+        // console.log()
+        // console.log(chalk.gray('    # create a new project straight from a github template'))
+        // console.log('    $ vue init username/repo my-project')
+        // console.log()
 })
 
 /**
@@ -65,7 +65,7 @@ const rawName = program.args[1]
 const inPlace = !rawName || rawName === '.'
 const name = inPlace ? path.relative('../', process.cwd()) : rawName
 const to = path.resolve(rawName || '.')
-const clone = program.clone || false
+    // const clone = program.clone || false
 
 const tmp = path.join(home, '.vue-templates', template.replace(/[\/:]/g, '-'))
 
@@ -166,6 +166,5 @@ function downloadAndGenerate(template) {
                 if (err) logger.fatal(err)
                 logger.success('Generated "%s".', name)
             })
-        }).catch((err) => console.log('failed:', err));
-
+        }).catch((err) => console.log('failed:', err))
 }
