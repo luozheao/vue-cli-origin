@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const download = require('download-git-repo')
+// const download = require('download-git-repo')
 const program = require('commander')
 const exists = require('fs').existsSync
 const path = require('path')
@@ -35,10 +35,10 @@ program
  */
 
 program.on('--help', () => {
-    console.log('  例子:')
-    console.log()
-    console.log(chalk.gray('    # 用内网的框架模板ox-webpack,创建一个项目'))
-    console.log('    $ ox init ox-webpack my-project')
+  console.log('  例子:')
+  console.log()
+  console.log(chalk.gray('    # 用内网的框架模板ox-webpack,创建一个项目'))
+  console.log('    $ ox init ox-webpack my-project')
         // console.log()
         // console.log(chalk.gray('    # create a new project straight from a github template'))
         // console.log('    $ vue init username/repo my-project')
@@ -49,9 +49,9 @@ program.on('--help', () => {
  * Help.
  */
 
-function help() {
-    program.parse(process.argv)
-    if (program.args.length < 1) return program.help()
+function help () {
+  program.parse(process.argv)
+  if (program.args.length < 1) return program.help()
 }
 help()
 
@@ -59,7 +59,7 @@ help()
  * Settings.
  */
 
-let template = program.args[0] //拿到第一个参数,即模板名字
+let template = program.args[0] // 拿到第一个参数,即模板名字
 const hasSlash = template.indexOf('/') > -1
 const rawName = program.args[1]
 const inPlace = !rawName || rawName === '.'
@@ -69,11 +69,9 @@ const to = path.resolve(rawName || '.')
 
 const tmp = path.join(home, '.vue-templates', template.replace(/[\/:]/g, '-'))
 
-
-
 if (program.offline) {
-    console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`)
-    template = tmp
+  console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`)
+  template = tmp
 }
 
 /**
@@ -82,60 +80,64 @@ if (program.offline) {
 
 console.log()
 process.on('exit', () => {
-    console.log()
+  console.log()
 })
 
 if (inPlace || exists(to)) {
-    inquirer.prompt([{
-        type: 'confirm',
-        message: inPlace ?
-            'Generate project in current directory?' : 'Target directory exists. Continue?',
-        name: 'ok'
-    }]).then(answers => {
-        if (answers.ok) {
-            run()
-        }
-    }).catch(logger.fatal)
+  inquirer.prompt([{
+    type: 'confirm',
+    message: inPlace
+            ? 'Generate project in current directory?' : 'Target directory exists. Continue?',
+    name: 'ok'
+  }]).then(answers => {
+    if (answers.ok) {
+      run()
+    }
+  }).catch(logger.fatal)
 } else {
-    run()
+  run()
 }
 
 /**
  * Check, download and generate the project.
  */
 
-function run() {
+function run () {
     // check if template is local
-    if (isLocalPath(template)) {
-        const templatePath = getTemplatePath(template)
-        if (exists(templatePath)) {
-            generate(name, templatePath, to, err => {
-                if (err) logger.fatal(err)
-                console.log()
-                logger.success('Generated "%s".', name)
-            })
-        } else {
-            logger.fatal('Local template "%s" not found.', template)
-        }
+  if (isLocalPath(template)) {
+    const templatePath = getTemplatePath(template)
+    if (exists(templatePath)) {
+      generate(name, templatePath, to, err => {
+        if (err) logger.fatal(err)
+        console.log()
+        logger.success('Generated "%s".', name)
+      })
     } else {
-        checkVersion(() => {
-            if (!hasSlash) {
-                const officialTemplate = 'http://git.tools.pjbest.com/oxui/' + template + '.git'
-                if (template.indexOf('#') !== -1) {
-                    downloadAndGenerate(officialTemplate)
-                } else {
-                    if (template.indexOf('-2.0') !== -1) {
-                        warnings.v2SuffixTemplatesDeprecated(template, inPlace ? '' : name)
-                        return
-                    }
-                    // warnings.v2BranchIsNowDefault(template, inPlace ? '' : name)
-                    downloadAndGenerate(officialTemplate)
-                }
-            } else {
-                downloadAndGenerate(template)
-            }
-        })
+      logger.fatal('Local template "%s" not found.', template)
     }
+  } else {
+    checkVersion(() => {
+      if (!hasSlash) {
+        let officialTemplate = 'http://git.tools.pjbest.com/oxui/' + template + '.git'
+        if (template === 'ox-framework') {
+          officialTemplate = 'git@git.tools.pjbest.com:zheao.luo/ox-framework.git'
+        }
+
+        if (template.indexOf('#') !== -1) {
+          downloadAndGenerate(officialTemplate)
+        } else {
+          if (template.indexOf('-2.0') !== -1) {
+            warnings.v2SuffixTemplatesDeprecated(template, inPlace ? '' : name)
+            return
+          }
+                    // warnings.v2BranchIsNowDefault(template, inPlace ? '' : name)
+          downloadAndGenerate(officialTemplate)
+        }
+      } else {
+        downloadAndGenerate(template)
+      }
+    })
+  }
 }
 
 /**
@@ -144,11 +146,11 @@ function run() {
  * @param {String} template
  */
 
-function downloadAndGenerate(template) {
-    const spinner = ora('downloading template')
-    spinner.start() //在命令行显示加载
+function downloadAndGenerate (template) {
+  const spinner = ora('downloading template')
+  spinner.start() // 在命令行显示加载
         // Remove if local template exists
-    if (exists(tmp)) rm(tmp)
+  if (exists(tmp)) rm(tmp)
         // download(template, tmp, { clone }, err => {
         //     spinner.stop()
         //     if (err) logger.fatal('Failed to download repo ' + template + ': ' + err.message.trim())
@@ -159,12 +161,12 @@ function downloadAndGenerate(template) {
         //     })
         // })
 
-    git().silent(true).clone(template, tmp) //template为git地址,tmp为本地存储模板地址
+  git().silent(true).clone(template, tmp) // template为git地址,tmp为本地存储模板地址
         .then(() => {
-            spinner.stop()
-            generate(name, tmp, to, err => {
-                if (err) logger.fatal(err)
-                logger.success('Generated "%s".', name)
-            })
+          spinner.stop()
+          generate(name, tmp, to, err => {
+            if (err) logger.fatal(err)
+            logger.success('Generated "%s".', name)
+          })
         }).catch((err) => console.log('failed:', err))
 }

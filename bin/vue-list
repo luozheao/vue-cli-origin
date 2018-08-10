@@ -10,7 +10,7 @@ const chalk = require('chalk')
 
 console.log()
 process.on('exit', () => {
-    console.log()
+  console.log()
 })
 
 /**
@@ -47,4 +47,8 @@ console.log('可用的模板:')
 console.log(
     '  ' + chalk.yellow('★') +
     '  ' + chalk.blue('ox-webpack') +
-    ' ------------ ' + '基于webpack的模板')
+    ' ------------ ' + '基于webpack的模板' +
+    '  ' + chalk.yellow('★') +
+    '  ' + chalk.blue('ox-framework') +
+    ' ------------ ' + '基于ox-ui的demo框架模板'
+)
