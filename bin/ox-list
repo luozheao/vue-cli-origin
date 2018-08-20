@@ -47,7 +47,7 @@ console.log('可用的模板:')
 console.log(
     '  ' + chalk.yellow('★') +
     '  ' + chalk.blue('ox-webpack') +
-    ' ------------ ' + '基于webpack的模板' +
+    ' ------------ ' + '基于webpack的模板\n' +
     '  ' + chalk.yellow('★') +
     '  ' + chalk.blue('ox-framework') +
     ' ------------ ' + '基于ox-ui的demo框架模板'

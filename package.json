@@ -27,13 +27,10 @@
         "name": "Evan You"
     },
     "bin": {
-        "vue": "bin/vue",
-        "vue-init": "bin/vue-init",
-        "vue-list": "bin/vue-list",
-        "vue-create": "bin/vue-create",
-        "ox": "bin/vue",
-        "ox-init": "bin/vue-init",
-        "ox-create": "bin/vue-create"
+        "ox": "bin/ox",
+        "ox-init": "bin/ox-init",
+        "ox-list": "bin/ox-list",
+        "ox-create": "bin/ox-create"
     },
     "bugs": {
         "url": "https://github.com/vuejs/vue-cli/issues"
@@ -94,5 +91,5 @@
         "test": "npm run lint && npm run e2e",
         "start": "git add . && git commit -m '发包' && npm version patch && npm publish"
     },
-    "version": "1.0.61"
+    "version": "1.0.63"
 }

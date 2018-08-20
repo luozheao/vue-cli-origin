@@ -6,6 +6,6 @@ program
     .version(require('../package').version)
     .usage('<command> [options]')
     .command('init', '用模板创建一个项目')
-    .command('list', '可用的模板')
+    .command('list', '显示可用的模板')
     .command('create', '创建一个业务模块实例')
 program.parse(process.argv)
