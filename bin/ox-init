@@ -37,8 +37,8 @@ program
 program.on('--help', () => {
   console.log('  例子:')
   console.log()
-  console.log(chalk.gray('    # 用内网的框架模板ox-framework,创建一个项目'))
-  console.log('    $ ox init ox-framework my-project')
+  console.log(chalk.gray('    用内网的框架模板ox-framework,创建一个项目'))
+  console.log('    ox init ox-framework my-project')
         // console.log()
         // console.log(chalk.gray('    # create a new project straight from a github template'))
         // console.log('    $ vue init username/repo my-project')
