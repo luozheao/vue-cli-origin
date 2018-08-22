@@ -37,8 +37,8 @@ program
 program.on('--help', () => {
   console.log('  例子:')
   console.log()
-  console.log(chalk.gray('    # 用内网的框架模板ox-webpack,创建一个项目'))
-  console.log('    $ ox init ox-webpack my-project')
+  console.log(chalk.gray('    # 用内网的框架模板ox-framework,创建一个项目'))
+  console.log('    $ ox init ox-framework my-project')
         // console.log()
         // console.log(chalk.gray('    # create a new project straight from a github template'))
         // console.log('    $ vue init username/repo my-project')
@@ -118,10 +118,10 @@ function run () {
   } else {
     checkVersion(() => {
       if (!hasSlash) {
-        let officialTemplate = 'http://git.tools.pjbest.com/oxui/' + template + '.git'
-        if (template === 'ox-framework') {
-          officialTemplate = 'git@git.tools.pjbest.com:zheao.luo/ox-framework.git'
-        }
+        const officialTemplate = 'http://git.tools.pjbest.com/oxui/' + template + '.git'
+        // if (template === 'ox-framework') {
+        //   officialTemplate = 'git@git.tools.pjbest.com:zheao.luo/ox-framework.git'
+        // }
 
         if (template.indexOf('#') !== -1) {
           downloadAndGenerate(officialTemplate)
