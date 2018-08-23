@@ -1,0 +1,80 @@
+<template>
+  <div class="ox-content-bg content" id='{{fileName}}'>
+    <table class="formTable" cellspacing="0">
+        <tr>
+          <td colspan="2" class="ox-border">
+              <ox-row :gutter="24">
+                  <ox-col :sm="6" class="formField formLabel">处理机构</ox-col>
+                  <ox-col :sm="18">
+                    <ox-select
+                      v-model="queryForm.planDealOrgId"
+                      remote
+                      :remoteConfig="remoteConfig"
+                      placeholder="请输入关键词"
+                      :loading="loading">
+                      <ox-option
+                        v-for="item in options4"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                        <span class="select-field" style="float: left"></span>
+                        <span class="select-field" style="float: right; color: #8492a6; font-size: 13px"></span>
+                      </ox-option>
+                    </ox-select>
+                  </ox-col>
+              </ox-row>
+              <ox-row :gutter="24"  style="margin-top: 1rem">
+                  <ox-col :sm="6" class="formField formLabel">配送/退货机构</ox-col>
+                  <ox-col :sm="18">
+                    <ox-select
+                      v-model="queryForm.referOrgId"
+                      remote
+                      :remoteConfig="remoteConfig"
+                      placeholder="请输入关键词"
+                      :loading="loading">
+                      <ox-option
+                        v-for="item in options4"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                        <span class="select-field" style="float: left"></span>
+                        <span class="select-field" style="float: right; color: #8492a6; font-size: 13px"></span>
+                      </ox-option>
+                    </ox-select>
+                  </ox-col>
+              </ox-row>
+              <ox-row :gutter="24" style="margin-top: 1rem">
+                  <ox-col :sm="6" class="formField formLabel">运单号</ox-col>
+                  <ox-col :sm="18">
+                      <ox-input  class="formInput" ref="transportInp" v-model="queryForm.transportSubNo" @keyup.enter.native="submit"></ox-input>
+                  </ox-col>
+              </ox-row>
+          </td>
+          <td :class="{highLight: isErrMsg,'ox-border':true}">
+              <h2 slot="title"></h2>
+          </td>
+        </tr>
+        <tr>
+          <td class="formLabel ox-border">主运单号：</td>
+          <td class="formLabel ox-border">运单类型：</td>
+          <td class="formLabel ox-border">运单状态：</td>
+        </tr>
+        <tr>
+          <td colspan="3" class="formLabel ox-border">客户名称：</td>
+        </tr>
+        <tr>
+          <td colspan="3" class="formLabel ox-border">收件地址：</td>
+        </tr>
+    </table>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+    import js from './{{fileName}}.js';
+    export default js;
+</script>
+
+<style scoped lang='{{style}}'>
+    @import './{{fileName}}.{{style}}';
+</style>

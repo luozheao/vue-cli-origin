@@ -1,0 +1,347 @@
+export default {
+  name: 'ContactUs',
+  data () {
+    return {
+      editForm: {
+        name: '',
+        age: '',
+        sex: '',
+        company: '',
+        time: '',
+        job: ''
+      },
+      editFormRules: {
+        name: [
+          { required: true, message: '请输入姓名', trigger: 'blur' }
+        ],
+        age: [
+          { required: true, message: '请输入年龄', trigger: 'blur' }
+        ],
+        sex: [
+          { required: true, message: '请输入性别', trigger: 'change' }
+        ],
+        time: [
+          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+        ],
+        company: [
+          { required: true, message: '请输入公司名称', trigger: 'blur' }
+        ],
+        job: [
+          { required: true, message: '请输入职业', trigger: 'blur' }
+        ]
+      },
+      queryForm: {
+        nameModel: '',
+        dateModel: '',
+        sexModel: ''
+      },
+      count: 0,
+      dialogFormVisible: false,
+      dialogTitle: '新增',
+      saveLoading: false,
+      isShowModel: true
+    }
+  },
+  created () {
+    this.config = {
+      vueSource: this,
+      tableId: 'demoTable',
+      param: {},
+      url: '/getTableData',
+      checkboxAllClick (param) {},
+      checkboxItemClick (param, index, table) {},
+      columnItems: [
+        {
+          field: 'operation',
+          fieldName: '操作',
+          className: 'center',
+          phoneAdaption: true,
+          btnConfig: [
+            { clickFn: 'showDetail', title: '查看', icon: 'ox-icon-nav_operationMenual' },
+            { clickFn: 'showEdit', title: '编辑', icon: 'ox-icon-edit-outline' },
+            { clickFn: 'deleteItem', title: '删除', icon: 'ox-icon-delete' }
+          ]
+        },
+        // {
+        //   field: 'opera',
+        //   fieldName: '操作',
+        //   className: 'center',
+        //   width: '80px',
+        //   render (value, OxTableItemData, index, createElement) {
+        //     return `< a href='#' @click='deleteItem(OxTableItemData)'>删除</ a>`
+        //   }
+        // },
+        {
+          field: 'name',
+          fieldName: '姓名',
+          className: 'center',
+          width: '120px',
+          isEdit: true
+        },
+        {
+          field: 'age',
+          fieldName: '年龄',
+          className: 'center',
+          isSort: true
+        },
+        {
+          field: 'sex',
+          fieldName: '性别',
+          className: 'center'
+        },
+        {
+          field: 'company',
+          fieldName: '公司',
+          className: 'center'
+        },
+        {
+          field: 'job',
+          fieldName: '职位',
+          className: 'center'
+
+        },
+        {
+          field: 'time',
+          fieldName: '日期',
+          className: 'center',
+          isEdit: false,
+          type: 'date',
+          render (value, itemdata, index, createElement) {
+            return moment(parseInt(value)).format('YYYY-MM-DD')
+          }
+        },
+        {
+          field: 'post1',
+          fieldName: '字典',
+          className: 'center',
+          type: 'text',
+          isEdit: true,
+          render (value, itemdata, index, vueSource, createElement) {
+            return index
+          }
+
+        }
+      ],
+      rowModel: {
+        rowClass: '334'
+      },
+      operBtns: [
+        {
+          text: '查询',
+          type: 'primary',
+          style: '',
+          size: 'small',
+          shape: 'circle',
+          icon: 'ios-search',
+          click: function () {
+            debugger
+            this.demoTable.query(this.demoTable.emptyValue(this.queryForm), function () {
+            })
+          }
+        },
+        {
+          text: '新增',
+          type: 'success',
+          style: '',
+          click: function () {
+            this.dialogFormVisible = true
+            this.$refs['editForm'] && this.$refs['editForm'].resetFields()
+            this.dialogTitle = '新增'
+            this.editForm = {}
+            this.isShowModel = true
+            // axios.put('/addTableData', null)
+            //   .then((response) => {
+            //     debugger
+            //     if (response.data.state === 0) {
+            //       this.demoTable.query(this.demoTable.emptyValue(this.queryForm))
+            //     }
+            //   })
+          }
+        },
+        {
+          text: '重置',
+          type: 'warning',
+          style: '',
+          click: function () {
+            this.resetCondition('queryForm')
+          }
+        },
+        {
+          text: '删除',
+          type: 'warning',
+          style: '',
+          click: function () {
+            this.deleteItems()
+          }
+        }
+      ],
+      completeInit () {
+        // this.setSelectData(document.querySelectorAll(".selectCon"),["value1","value2","value3"]);
+      }
+    }
+  },
+  methods: {
+    // handleClose (done) {
+    //   this.$confirm('确认关闭？')
+    //     .then(_ => {
+    //       done()
+    //       this.dialogFormVisible = false
+    //     })
+    //     .catch(_ => {})
+    // },
+    // 删除单条数据
+    deleteItem (itemdata) {
+      this.$confirm('确定删除该条数据?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        axios.delete('/deleteOneData?id=' + itemdata.id)
+          .then((response) => {
+            if (response.status === 200) {
+              this.demoTable.query(this.demoTable.emptyValue(this.queryForm))
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+            }
+          })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    // 删除多条
+    deleteItems () {
+      this.$confirm('确定删除已选多条数据?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        var selectItems = this.demoTable.selections.selectItems
+        var ids = selectItems.map(function (v) { return v.id })
+        axios.delete('/deleteSeveralData?ids=' + encodeURIComponent(ids))
+          .then((response) => {
+            if (response.status === 200) {
+              this.demoTable.query(this.demoTable.emptyValue(this.queryForm))
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+            }
+          })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    saveEdit (name) {
+      debugger
+      this.$refs[name].validate((valid) => {
+        debugger
+        if (valid) {
+          debugger
+          this.saveLoading = true
+          this.editForm.time = (new Date(this.editForm.time)).getTime()
+          let param = JSON.parse(JSON.stringify(this.editForm))
+          // param.time = (new Date(this.editForm.time)).getTime()
+          if (param.id || param.id === 0) { // 编辑
+            axios.put('/editTableData', param)
+              .then((response) => {
+                debugger
+                if (response.status === 200) {
+                  console.log(response)
+                  this.saveLoading = false
+                  this.dialogFormVisible = false
+                  this.$message({
+                    message: '编辑成功',
+                    type: 'success'
+                  })
+                  this.demoTable.query()
+                }
+              })
+              .catch(() => {
+                this.saveLoading = false
+                this.dialogFormVisible = false
+                this.$message({
+                  message: '编辑失败',
+                  type: 'warn'
+                })
+              })
+          } else { // 新增
+            axios.post('/addTableData', param)
+              .then((response) => {
+                console.log(response)
+                if (response.status === 200) {
+                  this.saveLoading = false
+                  this.$message({
+                    message: '新增成功',
+                    type: 'success'
+                  })
+                  this.dialogFormVisible = false
+                  this.demoTable.query()
+                }
+              })
+              .catch((error) => {
+                console.log(error)
+                this.saveLoading = false
+                this.dialogFormVisible = false
+                this.$message({
+                  message: '新增失败',
+                  type: 'warn'
+                })
+              })
+          }
+        }
+      })
+    },
+    showEdit (itemData) {
+      console.log(itemData)
+      this.isShowModel = true
+      this.$refs['editForm'] && this.$refs['editForm'].resetFields()
+      this.editForm = itemData
+      this.$nextTick(() => {
+        if (this.watchLen) {
+          this.watchLen()
+        }
+        this.watchLen = this.$watch(
+          'editForm', {
+            handler (newval, oldVal) {
+              if (this.dialogFormVisible === true) {
+
+              }
+            },
+            deep: true
+          }
+        )
+      })
+      debugger
+      this.editForm.time = new Date(+this.editForm.time)
+      this.dialogTitle = '编辑'
+      this.dialogFormVisible = true
+    },
+    showDetail (itemData) {
+      debugger
+      this.isShowModel = false
+      this.dialogFormVisible = true
+      this.$refs['editForm'] && this.$refs['editForm'].resetFields()
+      this.editForm = itemData
+      this.editForm.time = moment(parseInt(this.editForm.time)).format('YYYY-MM-DD')
+      this.dialogTitle = '查看'
+    },
+    add () {
+      this.count++
+    },
+    showed () {
+      console.log('contact-us component showed' + this.count)
+    },
+    resetCondition (formName) {
+      debugger
+      this.$refs[formName].resetFields()
+    }
+  }
+}

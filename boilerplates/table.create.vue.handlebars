@@ -1,0 +1,82 @@
+<template >
+  <div id='{{fileName}}'>
+      <div class="serchBox ox-content-bg">
+        <div class="searchLabel ox-title-color">查询条件</div>
+        <ox-form :inline="true" :model="queryForm" ref="queryForm">
+          <ox-form-item prop="nameModel">
+            <ox-input v-model="queryForm.nameModel" placeholder="请输入姓名"></ox-input>
+          </ox-form-item>
+          <ox-form-item  prop="sexModel">
+            <ox-select v-model="queryForm.sexModel" placeholder="请选择性别">
+              <ox-option key="female" label="男" value="男"></ox-option>
+              <ox-option key="male" label="女" value="女"></ox-option>
+            </ox-select>
+          </ox-form-item>
+        </ox-form>
+      </div>
+      <div>
+          <ox-table :config="config"></ox-table>
+      </div>
+      <ox-dialog
+        :title="dialogTitle"
+        :visible.sync="dialogFormVisible"
+        width="45%">
+        <ox-form ref="editForm" :inline="true" :rules="editFormRules" :model="editForm" labox-width="100px" size="mini">
+          <ox-row :gutter="24">
+            <ox-col :span="12">
+              <ox-form-item label="姓名" prop="name">
+                <ox-input v-model="editForm.name"></ox-input>
+              </ox-form-item>
+            </ox-col>
+            <ox-col :span="12">
+              <ox-form-item label="年龄"  prop="age">
+                <ox-input v-model="editForm.age"></ox-input>
+              </ox-form-item>
+            </ox-col>
+          </ox-row>
+          <ox-row :gutter="24">
+            <ox-col :span="12">
+              <ox-form-item label="性别" prop="sex">
+                <ox-select v-model="editForm.sex" placeholder="请选择">
+                <ox-option key="female" label="男" value="男"></ox-option>
+                  <ox-option key="male" label="女" value="女"></ox-option>
+                </ox-select>
+              </ox-form-item>
+            </ox-col>
+            <ox-col :span="12">
+              <ox-form-item label="公司"  prop="company">
+                <ox-input v-model="editForm.company"></ox-input>
+              </ox-form-item>
+            </ox-col>
+          </ox-row>
+          <ox-row :gutter="24">
+            <ox-col :span="12">
+              <ox-form-item label="日期" prop="time">
+                <ox-date-picker type="date" placeholder="选择日期" v-model="editForm.time" style="width: 100%;"></ox-date-picker>
+              </ox-form-item>
+            </ox-col>
+            <ox-col :span="12">
+              <ox-form-item label="职位" prop="job">
+                <ox-input v-model="editForm.job"></ox-input>
+              </ox-form-item>
+            </ox-col>
+          </ox-row>
+        </ox-form>
+        <span slot="footer" class="dialog-footer" v-show="isShowModel">
+          <ox-button @click="dialogFormVisible = false">取 消</ox-button>
+          <ox-button type="primary" @click="saveEdit('editForm')" :loading="saveLoading">确 定</ox-button>
+        </span>
+      </ox-dialog>
+  </div>
+</template>
+
+<script>
+  import axios from 'axios'
+  import moment from 'moment'
+    import js from './{{fileName}}.js';
+    export default js;
+</script>
+
+<style scoped lang='{{style}}'>
+    @import './{{fileName}}.{{style}}';
+</style>

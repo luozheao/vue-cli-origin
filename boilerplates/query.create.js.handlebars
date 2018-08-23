@@ -1,0 +1,119 @@
+export default {
+  data () {
+    return {
+      queryForm: {
+        planDealOrgId: '',
+        transportSubNo: '',
+        referOrgId: ''
+      },
+      message: '',
+      isErrMsg: false,
+      transportNo: '',
+      transportType: '',
+      transportStatus: '',
+      custName: '',
+      consigneeAddr: '',
+      options4: [],
+      loading: false
+    }
+  },
+  created () {
+    this.remoteConfig = {
+      url: '/getSelectData',
+      titles: ['机构名称', '编码'],
+      dataSource: this.options4,
+      getDataSource: ((vthis) => {
+        return () => {
+          return vthis.options4
+        }
+      })(this)
+    }
+  },
+  mounted () {
+    // this.options4 = this.states.map(item => {
+    //   return { value: item, label: item }
+    // })
+  },
+  activated () {
+
+  },
+  methods: {
+    showHistory () {
+
+    },
+    submit () {
+      debugger
+      if (this.validate()) {
+        axios.post('/outrangeReport', {
+          planDealOrgId: +this.queryForm.planDealOrgId,
+          referOrgId: this.queryForm.referOrgId,
+          transportSubNo: this.queryForm.transportSubNo.trim()
+        })
+          .then(({data}) => {
+            debugger
+            let resData = data.data
+            if (data.code === 200) {
+              this.reset()
+              this.message = data.message
+              this.isErrMsg = false
+              this.transportNo = resData.transportNo
+              this.transportType = resData.transportType
+              this.transportStatus = resData.transportStatus
+              this.custName = resData.custName
+              this.consigneeAddr = resData.consigneeAddr
+            } else {
+              let tmp = this.queryForm.transportSubNo
+              this.reset()
+              this.isErrMsg = true
+              this.message = data.message
+              this.transportNo = tmp
+              if (resData) {
+                this.transportNo = resData.transportNo
+                this.transportType = resData.transportType
+                this.transportStatus = resData.transportStatus
+                this.custName = resData.custName
+                this.consigneeAddr = resData.consigneeAddr
+              }
+            }
+            // util.playSound(null, !this.isErrMsg)
+          })
+          .catch(() => {
+            let tmp = this.queryForm.transportSubNo
+            this.reset()
+            this.isErrMsg = true
+            this.message = '网络错误'
+            this.transportNo = tmp
+            // util.playSound(null, !this.isErrMsg)
+          })
+      }
+    },
+    reset () {
+      this.message = ''
+      this.isErrMsg = false
+      this.transportNo = ''
+      this.transportType = ''
+      this.transportStatus = ''
+      this.custName = ''
+      this.consigneeAddr = ''
+      this.queryForm.transportSubNo = ''
+    },
+    validate () {
+      if (this.queryForm.planDealOrgId === '') {
+        this.isErrMsg = true
+        this.message = '请选择处理机构'
+        // util.playSound(null, !this.isErrMsg)
+        return false
+      }
+      if (this.queryForm.transportSubNo === '') {
+        this.isErrMsg = true
+        this.message = '请输入运单号'
+        // util.playSound(null, !this.isErrMsg)
+        return false
+      }
+      return true
+    }
+  },
+  computed: {
+
+  }
+}
